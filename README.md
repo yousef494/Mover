@@ -8,7 +8,7 @@ Python Script to move or copy files from source to destination based on CSV file
 
 # Usage
 Usage: mover.py [-h] [-f LABELS] [-src SOURCE] [-dst DESTINATION]
-                [-cls CLASSES] [-opr OPERATION]
+                [-cls CLASSES] [-opr OPERATION] [-ext EXTENSTIONS]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -23,3 +23,5 @@ optional arguments:
                         Possible classes (labels) e.g. 0,1
   -opr OPERATION, --operation OPERATION
                         Should the files copied or moved (copy/move)
+  -ext EXTENSTIONS, --extenstions EXTENSTIONS
+                        One or multiple extenstions e.g. jpg or jpg,png
