@@ -11,12 +11,13 @@ class FileMover():
     SETTINGS = {}
     LOOKUP_TABLE = {}
 
-    def __init__(self, csv_file, src, dst_folder, classes, opr):
+    def __init__(self, csv_file, src, dst_folder, classes, opr, ext):
         self.SETTINGS = {
             'csv_file': csv_file,
             'src': src,
             'dst': dst_folder,
-            'opr': opr
+            'opr': opr,
+            'ext': tuple(ext)
         }
         for _class in classes:
             self.SETTINGS.update( { _class.strip() :  dst_folder + _class.strip() } )
@@ -25,7 +26,7 @@ class FileMover():
     def run(self):
         #iterate over all images (files) in the src dir
         src = self.SETTINGS['src']
-        files = [i for i in os.listdir(src) if i.lower().endswith("jpg") and path.isfile(path.join(src, i))]
+        files = [i for i in os.listdir(src) if i.lower().endswith(self.SETTINGS['ext']) and path.isfile(path.join(src, i))]
         for f in files:
             dst = self.lookUp(f)
 
@@ -77,7 +78,11 @@ if __name__ == "__main__":
     
     parser.add_argument("-opr", "--operation", help="Should the files copied or moved (copy/move)",
     default='copy')
+
+    parser.add_argument("-ext", "--extenstions", help="One or multiple extenstions e.g. jpg or jpg,png",
+    default='jpg')
     
     args = parser.parse_args()
-    fileMover = FileMover(args.labels, args.source, args.destination, args.classes.split(','), args.operation)
+    fileMover = FileMover(args.labels, args.source, args.destination,
+                args.classes.split(','), args.operation, args.extenstions.split(','))
     fileMover.run()
